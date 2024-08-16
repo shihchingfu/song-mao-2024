@@ -1,0 +1,115 @@
+---
+format: revealjs
+self-contained: true
+---
+
+## 
+
+<center>
+![<https://doi.org/10.48550/arXiv.2405.04033>](images/title-author-abstract.png)
+</center>
+
+## Summary {.smaller}
+
+- Periodic and quasi-periodic can help reveal properties of underlying object.
+- Three methods for discovering periodicity: Lomb-Scargle periodogram (LSP), weighted wavelet Z-transform (WWZ), and Gaussian process regression
+- Compare their results on two X-ray light curves from Swift that accompanied short gamma-ray bursts (sGRB).
+- Found periodicity but needs to be confirmed
+- Detrending was the biggest factor affecting the recovery of periods.
+- Suggest X-rays originate from magnetar oscillations after binary merger or precession of newborn magnetar.
+
+## Data
+
+- 124 sGRBs in third Swift-BAT catalogue (12/2004--07/2019)
+- 67 BAT light curves with SNR > 3
+- Chose 2 light curves with sufficient data: 
+  - GRB 050724
+  - GRB 060614
+- Used points from the initial WT (windowed timing) mode, not latter PC (photon counting) mode.
+    
+## Data: sGRB 050724
+
+![](images/figure02.png)
+
+## Data: sGRB 060614
+
+![](images/figure13.png)
+
+
+## Methodology (Raw light curve)
+
+- Fit GP
+  - Mean function: power law, polynomial.
+  - kernel: quasiperiodic, simple harmonic oscillator, damped random walk.
+- Inspect hyperparameters
+  - period, P
+  - quality factor, Q > 0.5
+
+## Methodology (Detrending)
+
+Detrend by subtracting from raw light curve:
+
+- Fitted GP
+  - Mean: power law, kernel: quasiperiodic.
+  - Mean: power law, kernel: damped random walk.
+  - Mean: polynomial, kernel: quasiperiodic.
+  - Mean: polynomial, kernel: simple harmonic oscillator.
+  - Mean: polynomial, kernel: damped random walk.
+- Fitted polynomial
+
+## Methodology (Detrended light curve)
+   
+- Fit GP
+  - Mean function: constant.
+  - kernel: quasiperiodic, damped random walk.
+- Calculate L-S periodogram
+- Apply WWZ-transform
+
+
+## Results
+
+![](images/figure04.png)
+
+## Results
+
+![](images/figure14.png)
+
+
+## Results
+
+![](images/figure24.png)
+
+
+## Results
+
+![](images/figure25.png)
+
+## Conclusions
+
+- Potential QPOs were detected.
+- LSP, WWZ, and GPs seem consistent.
+- Detrending has large influence, as does kernel and mean function.
+
+## Comments
+
+- No recommendations on which method to use and why.
+- Spent too much time describing `celerite`, could just cite.
+- Conclusion contradicts results.
+
+
+## Statistical nitpicking
+
+- Detrending is like enforcing stationarity
+- Detrending itself is not trivial; what order polynomial was used?
+  - equivalent to non-zero GP mean function
+- Heavy selection bias (n = 2)
+- Fitting Gaussian likelihood to X-ray count data
+- LSP only looks for sinusoids
+- Using MLE to initialise MCMC is good practice
+
+
+## Hmmm...
+
+![](images/quotation-sec1.png)
+
+![](images/quotation-sec4.1.png)
